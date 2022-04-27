@@ -1,11 +1,11 @@
 <template>
   <div>
-    Login
+    一级分类
   </div>
 </template>
 
-<script setup lang="ts" name="Login">
-// login
+<script setup lang="ts">
+
 </script>
 
 <style scoped>

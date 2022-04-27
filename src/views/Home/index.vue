@@ -1,11 +1,11 @@
 <template>
   <div>
-    Login
+    我是主页
   </div>
 </template>
 
-<script setup lang="ts" name="Login">
-// login
+<script setup lang="ts">
+
 </script>
 
 <style scoped>
