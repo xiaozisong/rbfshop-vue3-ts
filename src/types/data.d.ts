@@ -18,9 +18,25 @@ export type CateList = {
   open: boolean,
   goods: IGoodsItem[]
 }[]
+
 // 声明category请求返回的数据类型
-export type CateResType = {
-    code: string
-    msg: string
-    result: CateList
+// export type CateResType = {
+//     code: string
+//     msg: string
+//     result: CateList
+// }
+
+// 这里的RootObject接口类型与上面的CateResType类型相同，所以保留一个即可
+// 因为我们接口返回的数据大部分都是 code msg result这种格式，但是result里面的数据类型我们不保证相同，所以这里使用泛型，把类型当做参数传递
+export interface ApiRes<T> {
+  code: string;
+  msg: string;
+  result: T;
+}
+
+export interface BannerResult {
+  id: string;
+  imgUrl: string;
+  hrefUrl: string;
+  type: string;
 }

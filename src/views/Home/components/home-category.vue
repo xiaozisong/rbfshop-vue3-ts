@@ -6,6 +6,18 @@
         <template v-if="item.children">
           <RouterLink to="/" v-for="sub in item.children.slice(0,2)">{{ sub.name }}</RouterLink>
         </template>
+        <template v-else>
+          <XtxSkeleton 
+          :width="60" 
+          :height="20" 
+          animated 
+          fade
+          bg="#ccc" 
+          v-for="item in 2" :key="item" 
+          style="margin-right: 15px"
+          >
+          </XtxSkeleton>
+        </template>
       </li>
     </ul>
      <!-- 弹层 -->
