@@ -1,10 +1,14 @@
 <template>
   <ul class="app-header-nav">
     <li class="home"><RouterLink to="/">首页</RouterLink></li>
-    <li v-for="item in category.list" :key="item.id">
+    <li v-for="item in category.list" :key="item.id" 
+    @mouseenter="category.show(item.id)" 
+    @mouseleave="category.hide(item.id)"
+    @click="category.hide(item.id)"
+    >
       <router-link :to="`/category/${item.id}`">{{item.name}}</router-link>
       <!-- 新增++++++++ -->
-      <div class="layer">
+      <div class="layer" :class="{open: item.open}">
         <div v-if="!item.children?.length">正在加载中······</div>
         <ul>
           <li v-for="sub in item.children" :key="sub.id">
@@ -55,10 +59,10 @@ const { category }  = useStore()
         color: @xtxColor;
         border-bottom: 1px solid @xtxColor;
       }
-      > .layer {
-        height: 132px;
-        opacity: 1;
-      }
+      // > .layer {
+      //   height: 132px;
+      //   opacity: 1;
+      // }
     }
   }
 }
@@ -74,6 +78,10 @@ const { category }  = useStore()
   opacity: 0;
   box-shadow: 0 0 5px #ccc;
   transition: all 0.2s 0.1s;
+  &.open{
+    height: 132px;
+    opacity: 1;
+  }
   ul {
     display: flex;
     flex-wrap: wrap;

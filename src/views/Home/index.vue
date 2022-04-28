@@ -1,13 +1,19 @@
 <template>
-  <div>
-    我是主页
+  <div class="page-home">
+    <div class="home-entry">
+      <div class="container">
+        <!-- 左侧分类 -->
+        <HomeCategory />
+        <!-- banner轮播图 -->
+        <HomeBanner />
+      </div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts">
-
+<script lang="ts" setup>
+import HomeBanner from './components/home-banner.vue'
+import HomeCategory from './components/home-category.vue'
 </script>
 
-<style scoped>
-
-</style>
+<style lang="less" scoped></style>
