@@ -1,5 +1,5 @@
 <template>
-  <div class="xtx-carousel">
+  <div class="xtx-carousel"  @mouseenter="stop" @mouseleave="start">
     <ul class="carousel-body">
       <li class="carousel-item" :class="{fade: activeIndex === index}" v-for="(item, index) in slides" :key="item.id">
         <RouterLink to="/">
@@ -24,30 +24,52 @@
 
 <script lang="ts" setup name="XtxCarousel">
 import { BannerResult } from '@/types/data'
-import { ref } from 'vue';
-const props = defineProps<{
-  slides: BannerResult[],
-  required: true
-}>()
-
-
+import { onMounted, onUnmounted, ref } from 'vue';
+// 定义轮播组件接收的类型
+interface IProps {
+  slides: BannerResult[]
+  duration?: number
+  autoPlay?: boolean
+}
+const { slides, duration = 2000, autoPlay = false } = defineProps<IProps>() // 使用泛型方式
+// 定义索引，轮播使用
 const activeIndex = ref(0)
+// 上一张
 const prev = () => {
   if (activeIndex.value === 0) {
-    activeIndex.value = props.slides.length - 1
-    return 
+    activeIndex.value = slides.length - 1
   }
-  console.log(props.slides, '39');
-  
   activeIndex.value--
 }
+// 下一张
 const next = () => {
-if (activeIndex.value >= props.slides.length - 1) {
+if (activeIndex.value >= slides.length - 1) {
     activeIndex.value = 0
-    return 
   }
   activeIndex.value++
 }
+// 定义timerId，用来清除定时器
+let timerId: number = -1
+// 鼠标悬停 暂停轮播
+const stop = () => {
+  clearInterval(timerId)
+}
+// 鼠标移出 开始轮播
+const start = () => {
+  if (!autoPlay) return // 如果没传autoPlay属性，暂停轮播
+  clearInterval(timerId) // 先清除一下定时器，以免定时器残留
+  timerId = window.setInterval(() => {
+    next()
+  }, duration)
+}
+// 进入页面自动开启轮播
+onMounted(() => {
+  start()
+})
+// 组件销毁时卸载定时器
+onUnmounted(() => {
+  stop()
+})
 </script>
 
 <style scoped lang="less">

@@ -1,7 +1,7 @@
 <template>
   <div class="home-banner">
     <!-- 轮播图 -->
-    <XtxCarousel :slides="home.bannerList"></XtxCarousel>
+    <XtxCarousel :slides="home.bannerList" autoPlay :dutation="1000"></XtxCarousel>
   </div>
 </template>
 <script lang="ts" setup>
