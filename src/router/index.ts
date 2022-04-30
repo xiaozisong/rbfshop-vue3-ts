@@ -21,6 +21,8 @@ export default createRouter({
         }
       ]
     },
-    {path: '/login', component: () => import('@/views/Login/index.vue')}
+    {path: '/login', component: () => import('@/views/Login/index.vue')},
+    {path: '/pg', component: () => import('@/views/Playground/index.vue')}
+
   ]
 })

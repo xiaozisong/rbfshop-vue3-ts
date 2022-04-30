@@ -14,10 +14,10 @@ export type CateList = {
   id: string
   name: string
   picture: string
-  children: CateList
+  children: CateList[]
   open: boolean,
   goods: IGoodsItem[]
-}[]
+}
 
 // 声明category请求返回的数据类型
 // export type CateResType = {
@@ -31,7 +31,7 @@ export type CateList = {
 export interface ApiRes<T> {
   code: string;
   msg: string;
-  result: T;
+  result: T[];
 }
 
 export interface BannerResult {
@@ -39,4 +39,30 @@ export interface BannerResult {
   imgUrl: string;
   hrefUrl: string;
   type: string;
+}
+
+export interface GoodsItem {
+  id: string;
+  name: string;
+  desc: string;
+  price: string;
+  picture: string;
+  orderNum: number;
+}
+
+export type HotGoods = {
+  id: string
+  picture: string
+  title: string
+  alt: string
+}
+export type Brand = {
+  id: string
+  name: string
+  nameEn: string
+  logo: string
+  picture: string
+  type?: any
+  desc: string
+  place: string
 }

@@ -10,7 +10,7 @@ const topCategoryArr = topCategory.map(item => {
 export default defineStore('category', {
   state(){
     return {
-      list: topCategoryArr as CateList
+      list: topCategoryArr as CateList[]
     }
   },
   actions: {
