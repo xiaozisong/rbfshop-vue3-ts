@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import http from '@/utils/request'
-import { CateList, ApiRes } from "@/types/data"
+import { CateList, ApiRes, ApiObjRes, TopCategory, SubCategory } from "@/types/data"
 import { topCategory } from '../constants'
 const topCategoryArr = topCategory.map(item => {
   return {
@@ -10,7 +10,9 @@ const topCategoryArr = topCategory.map(item => {
 export default defineStore('category', {
   state(){
     return {
-      list: topCategoryArr as CateList[]
+      list: topCategoryArr as CateList[],
+      topCategory: {} as TopCategory,
+      subCategory: {} as SubCategory
     }
   },
   actions: {
@@ -32,7 +34,26 @@ export default defineStore('category', {
     hide(id: string){
       const obj = this.list.find(item => item.id === id)
       obj!.open = false
-    }
+    },
+    async getTopCategory(id: string) {
+      const res = await http.get<ApiObjRes<TopCategory>>('/category', {
+        params: {
+          id,
+        },
+      })
+      this.topCategory = res.data.result
+    },
+    async getSubFilter(id: string) {
+      const res = await http.get<ApiObjRes<SubCategory>>(
+        '/category/sub/filter',
+        {
+          params: {
+            id,
+          },
+        }
+      )
+      this.subCategory = res.data.result
+    },
   },
   getters: {
 

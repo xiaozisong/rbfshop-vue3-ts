@@ -1,12 +1,13 @@
 import { defineStore } from "pinia"
 import request from '@/utils/request'
-import { ApiRes, BannerResult, GoodsItem, HotGoods, Brand } from '@/types/data'
+import { ApiRes, BannerResult, GoodsItem, HotGoods, Brand, HomeProduct } from '@/types/data'
 export default defineStore('home', {
   state(){
     return {
       bannerList: [] as BannerResult[],
       newGoodsList: [] as GoodsItem[],
       hotGoodsList: [] as HotGoods[],
+      productList: [] as HomeProduct[],
       // 品牌数据
       brandList: [] as Brand[],
     }
@@ -30,6 +31,10 @@ export default defineStore('home', {
     async getBrandList() {
       const res = await request.get<ApiRes<Brand>>('/home/brand')
       this.brandList = res.data.result
+    },
+    async getProductList() {
+      const res = await request.get<ApiRes<HomeProduct>>('/home/goods')
+      this.productList = res.data.result
     },
   },
   getters: {

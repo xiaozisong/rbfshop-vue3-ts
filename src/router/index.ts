@@ -2,6 +2,11 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Layout from '@/Layout/index.vue'
 export default createRouter({
   history: createWebHashHistory(),
+  scrollBehavior: () => {
+    return {
+      top: 0,
+    }
+  },
   routes: [
     {
       path: '/', 
@@ -18,6 +23,10 @@ export default createRouter({
         {
           path: '/category/sub/:id',
           component: () => import('@/views/Category/sub.vue')
+        },
+        {
+          path: '/goods/:id',
+          component: () => import('@/views/Goods/index.vue')
         }
       ]
     },

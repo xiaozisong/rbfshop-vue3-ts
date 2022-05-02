@@ -33,6 +33,12 @@ export interface ApiRes<T> {
   msg: string;
   result: T[];
 }
+// 返回的是对象数据类型
+export interface ApiObjRes<T> {
+  code: string;
+  msg: string;
+  result: T;
+}
 
 export interface BannerResult {
   id: string;
@@ -47,7 +53,7 @@ export interface GoodsItem {
   desc: string;
   price: string;
   picture: string;
-  orderNum: number;
+  orderNum?: number;
 }
 
 export type HotGoods = {
@@ -65,4 +71,87 @@ export type Brand = {
   type?: any
   desc: string
   place: string
+}
+// 首页商品推荐
+export type HomeProduct = {
+  id: string
+  name: string
+  picture: string
+  saleInfo: string
+  children: {
+    id: string
+    name: string
+  }[]
+  goods: {
+    id: string
+    name: string
+    desc: string
+    price: string
+    picture: string
+    discount?: any
+    orderNum: number
+  }[]
+}
+// 顶级分类类型
+export type TopCategory = {
+  id: string
+  name: string
+  picture: string
+  children: CategoryItem[]
+}
+interface CategoryItem {   
+  brands: null // 有可能会修改   
+  categories: null // 有可能会修改   
+  goods: GoodsItem[]   
+  id: string   
+  name: string   
+  parentId: null | string   
+  parentName: null | string  
+   picture: string   
+   saleProperties: null // 有可能会修改 
+}
+export type SubCategory = {
+  id: string
+  name: string
+  picture?: any
+  parentId: string
+  parentName: string
+  brands: {
+    id: string
+    name: string
+    nameEn: string
+    logo: string
+    picture: string
+    type?: any
+    desc: string
+    place: string
+  }[]
+  saleProperties: SaleProperty[]
+  goods: GoodItem[]
+}
+// 商品模块的类型声明
+export type GoodsInfo = {
+  id: string
+  name: string
+  spuCode: string
+  desc: string
+  price: string
+  oldPrice: string
+  discount: number
+  inventory: number
+  salesCount: number
+  commentCount: number
+  collectCount: number
+  mainVideos: any[]
+  videoScale: number
+  mainPictures: string[]
+  isPreSale: boolean
+  isCollect?: any
+  recommends?: any
+  userAddresses?: any
+  evaluationInfo?: any
+  categories: {
+    id: string
+    name: string
+  }[]
 }

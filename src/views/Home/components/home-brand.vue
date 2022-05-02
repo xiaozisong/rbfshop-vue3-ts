@@ -3,19 +3,29 @@ import HomePanel from './home-panel.vue'
 import HomeSkeleton from './home-skeleton.vue'
 import useStore from '@/store'
 import { useLazyLoadData } from '@/utils/hooks';
+import { ref } from 'vue';
 const { home } = useStore()
 const target = useLazyLoadData(home.getBrandList)
+const index = ref(0)
+const prev = () => {
+  if(index.value === 0) return
+  index.value--
+}
+const next = () => {
+  if(index.value === Math.ceil(home.brandList.length / 5 -1 )) return
+  index.value++
+}
 </script>
 
 <template>
   <HomePanel title="热门品牌" sub-title="国际经典 品质保证" ref="target">
     <template v-slot:right>
-      <a href="javascript:;" class="iconfont icon-angle-left prev"></a>
-      <a href="javascript:;" class="iconfont icon-angle-right next"></a>
+      <a href="javascript:;" :class="{disabled: index === 0}" class="iconfont icon-angle-left prev" @click="prev" ></a>
+      <a href="javascript:;" :class="{disabled: index === Math.ceil(home.brandList.length / 5 -1 )}" class="iconfont icon-angle-right next" @click="next" ></a>
     </template>
       <div class="box" ref="box">
      <Transition name="fade">
-        <ul class="list" v-if="home.brandList.length">
+        <ul class="list" v-if="home.brandList.length" :style="{transform:`translateX(${-index * 1024}px)`, width: `${Math.ceil(home.brandList.length / 5 -1 ) * 1240}px`}">
         <li v-for="item in home.brandList" :key="item.id">
           <RouterLink to="/">
             <img v-lazy="item.picture" alt="" />

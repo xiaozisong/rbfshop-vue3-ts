@@ -6,7 +6,7 @@
     @mouseleave="category.hide(item.id)"
     @click="category.hide(item.id)"
     >
-      <router-link :to="`/category/${item.id}`">{{item.name}}</router-link>
+      <router-link :to="`/category/${item.id}`">{{item.name}}</router-link >
       <!-- 新增++++++++ -->
       <div class="layer" :class="{open: item.open}">
         <div v-if="!item.children?.length">正在加载中······</div>
