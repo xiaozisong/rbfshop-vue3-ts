@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import { ApiObjRes, GoodsInfo } from '@/types/data'
+import { ApiObjRes } from '@/types/data'
+import { GoodsInfo } from '@/types/goods'
 import http from '@/utils/request'
 export default defineStore('goods', {
   state() {

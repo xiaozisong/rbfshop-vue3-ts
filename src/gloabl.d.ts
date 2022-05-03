@@ -3,6 +3,7 @@ import XtxCarousel from '@/components/Carousel/index.vue'
 import XtxMore from '@/components/More/index.vue'
 import XtxBread from '@/components/Bread/index.vue'
 import XtxBreadItem from '@/components/Bread/item.vue'
+import XtxCity from '@/components/City/index.vue'
 declare module 'vue' {
   export interface GlobalComponents {
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -12,6 +13,7 @@ declare module 'vue' {
     XtxMore: typeof XtxMore
     XtxBread: typeof XtxBread
     XtxBreadItem: typeof XtxBreadItem
+    XtxCity: typeof XtxCity
   }
 }
 

@@ -13,7 +13,15 @@
         <XtxBreadItem>{{ info.name }}</XtxBreadItem>
       </XtxBread>
       <!-- 商品信息 -->
-      <div class="goods-info"></div>
+      <div class="goods-info">
+        <div class="media">
+          <GoodsImage :images="info.mainPictures"></GoodsImage>
+          <GoodsSales />
+        </div>
+        <div class="spec">
+          <GoodsName :goods="info" />
+        </div>
+      </div>
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
@@ -28,6 +36,9 @@
 </template>
 <script lang="ts" setup>
 import useStore from '@/store'
+import GoodsImage from './components/goods-images.vue'
+import GoodsSales from './components/goods-sales.vue'
+import GoodsName from './components/goods-name.vue'
 import { storeToRefs } from 'pinia'
 import { watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
@@ -44,6 +55,16 @@ const { info } = storeToRefs(goods)
 .goods-info {
   min-height: 600px;
   background: #fff;
+  display: flex;
+  .media {
+    width: 580px;
+    height: 600px;
+    padding: 30px 50px;
+  }
+  .spec {
+    flex: 1;
+    padding: 30px 30px 30px 0;
+  }
 }
 .goods-footer {
   display: flex;

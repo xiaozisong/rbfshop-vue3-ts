@@ -4,6 +4,7 @@ import Carousel from './Carousel/index.vue'
 import More from './More/index.vue'
 import Bread from './Bread/index.vue'
 import BreadItem from './Bread/Item.vue'
+import City from './City/index.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
 export default {
@@ -13,6 +14,7 @@ export default {
     app.component(More.name, More)
     app.component('XtxBread', Bread)
     app.component('XtxBreadItem', BreadItem)
+    app.component(City.name, City)
     app.directive('lazy', {
       mounted(el, binding) {
         const { stop } = useIntersectionObserver(el, ([{ isIntersecting }]) => {
