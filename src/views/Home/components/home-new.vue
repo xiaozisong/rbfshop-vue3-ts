@@ -6,7 +6,7 @@
         <!-- 面板内容 -->
         <ul class="goods-list" v-if="home.newGoodsList.length">
           <li v-for="item in home.newGoodsList" :key="item.id">
-            <RouterLink :to="`/goods/${item.id}`">
+            <RouterLink :to="`/product/${item.id}`">
               <img
                 v-lazy="item.picture"
                 alt=""

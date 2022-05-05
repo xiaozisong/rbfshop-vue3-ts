@@ -1,9 +1,9 @@
 <template>
-  <p class="g-name">{{ goods.name }}</p>
-  <p class="g-desc">{{ goods.desc }}</p>
+  <p class="g-name">{{ info.name }}</p>
+  <p class="g-desc">{{ info.desc }}</p>
   <p class="g-price">
-    <span>{{goods.price}}</span>
-    <span>{{goods.oldPrice}}</span>
+    <span>{{info.price}}</span>
+    <span>{{info.oldPrice}}</span>
   </p>
   <div class="g-service">
     <dl>
@@ -25,7 +25,7 @@
         <a href="javascript:;">了解详情</a>
       </dd>
     </dl>
-    <GoodsSku :goods="goods"></GoodsSku>
+    <GoodsSku :goods="info" v-if="info.id" skuId="1369155862131642369" @changeSkuId="changeSkuId"></GoodsSku>
   </div>
 </template>
 <script lang="ts" setup name="GoodName">
@@ -33,12 +33,25 @@ import { GoodsInfo } from '@/types/goods'
 import { ref } from 'vue'
 import { Address } from '@/types/city'
 import GoodsSku from './goods-sku.vue'
+import useStore from '@/store/index'
+import { storeToRefs } from 'pinia'
 defineProps<{
   goods: GoodsInfo
 }>()
+const { goods } = useStore()
+const { info } = storeToRefs(goods)
 const defaultAddress = ref(['北京市-北京市-海淀区'])
 const changeAddress = (address: Address) => {
   defaultAddress.value[0] = address.provinceName + '-' +address.cityName + '-' + address.countyName
+}
+// 子传父下来的事件
+const changeSkuId = (skuId: string) => {
+  const sku = info.value.skus.find(item => item.id === skuId)
+  if (sku) {
+    info.value.inventory = sku.inventory
+    info.value.price = sku.price
+    info.value.oldPrice = sku.oldPrice
+  }
 }
 </script>
 

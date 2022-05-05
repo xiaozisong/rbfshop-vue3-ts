@@ -25,7 +25,7 @@ export default createRouter({
           component: () => import('@/views/Category/sub.vue')
         },
         {
-          path: '/goods/:id',
+          path: '/product/:id',
           component: () => import('@/views/Goods/index.vue')
         }
       ]

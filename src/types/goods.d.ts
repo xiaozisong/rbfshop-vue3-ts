@@ -18,6 +18,8 @@ export type Specs = {
     desc: string
     name: string
     picture: null | string
+    selected: boolean
+    disabled: boolean
   }[]
 }[]
 // 商品模块的类型声明
