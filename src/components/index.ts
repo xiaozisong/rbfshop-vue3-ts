@@ -7,6 +7,8 @@ import BreadItem from './Bread/Item.vue'
 import City from './City/index.vue'
 import Numbox from './Numbox/index.vue'
 import Button from './Button/index.vue'
+import Checkbox from './Checkbox/index.vue'
+import Message from './message/message.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
 export default {
@@ -19,6 +21,8 @@ export default {
     app.component(City.name, City)
     app.component(Numbox.name, Numbox)
     app.component(Button.name, Button)
+    app.component(Checkbox.name, Checkbox)
+    app.component(Message.name, Message)
     app.directive('lazy', {
       mounted(el, binding) {
         const { stop } = useIntersectionObserver(el, ([{ isIntersecting }]) => {

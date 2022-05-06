@@ -20,7 +20,7 @@
         </div>
         <div class="spec">
           <GoodsName :goods="info" />
-          <GoodsSku :goods="info" v-if="info.id" skuId="1369155862131642369" @changeSkuId="changeSkuId"></GoodsSku>
+          <GoodsSku :goods="info" :key="info.id" v-if="info.id" skuId="1369155862131642369" @changeSkuId="changeSkuId"></GoodsSku>
           <XtxNumbox v-model="count" :max="10" :min="1" label="数量" @change="change"></XtxNumbox>
           <XtxButton size="middle" type="primary" style="margin-top: 20px; margin-left: 10px;">加入购物车</XtxButton>
         </div>

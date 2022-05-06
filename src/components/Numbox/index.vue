@@ -1,9 +1,9 @@
 <template>
-  <div class="xtx-numbox">
+  <div class="xtx-numbox" @click="changeFn">
     <div class="label">{{ label }}</div>
     <div class="numbox">
-      <a href="javascript:;" @click="reduce">-</a>
-      <input type="text" readonly :value="modelValue" />
+      <a href="javascript:;" @click="sub">-</a>
+      <input type="text" readonly :value="modelValue"/>
       <a href="javascript:;" @click="add">+</a>
     </div>
   </div>
@@ -37,12 +37,15 @@ const emit = defineEmits<{
 const add = () => {
   if(props.modelValue > props.max) return
   emit('update:modelValue', props.modelValue + 1)
-  emit('change', props.modelValue)
 }
 // 减得操作 
-const reduce = () => {
+const sub = () => {
   if(props.modelValue < props.min) return
   emit('update:modelValue', props.modelValue - 1)
+}
+const changeFn = () => {
+  console.log(1);
+  
   emit('change', props.modelValue)
 }
 </script>

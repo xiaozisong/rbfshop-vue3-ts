@@ -45,6 +45,9 @@ const changeSelected = (item: any, spec: any) => {
   // 或者使用过滤掉空字符串，再判断数组长度是否等于props.specs.length即可，如果相等则触发子传父
   if (!arr.includes('')) {
       const key = arr.join('+')
+      console.log(pathMap, '47');
+      
+      console.log(pathMap[key], '48');
       if (pathMap[key][0]) {
         emit('changeSkuId', pathMap[key][0])   
       }
