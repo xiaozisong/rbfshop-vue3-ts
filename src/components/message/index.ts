@@ -7,7 +7,7 @@ type MessageType = {
   duration?: number
 }
 // 封装message弹窗
-export default function Message({type, text, duration = 2000}: MessageType) {
+export default function Message({type, text, duration = 1000}: MessageType) {
   const VNode = h(XtxMessage, {type, text}) // 创建虚拟dom
   // 将虚拟dom挂载到容器中
   const VDivDom = document.createElement('div')
@@ -16,6 +16,6 @@ export default function Message({type, text, duration = 2000}: MessageType) {
     // 将Message挂载到虚拟容器中
     render(VNode, VDivDom)
     setTimeout(() => {
-      VDivDom.remove()
+      render(null, VDivDom)
     }, duration)
 }

@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="play">
 import Message from '@/components/message/index'
 const clickFn = () => {
   Message({type: 'error', text: 'hhh', duration: 2000})

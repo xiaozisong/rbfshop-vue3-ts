@@ -14,8 +14,14 @@ const props = defineProps({
 
 const isShow = ref(false)
 onMounted(() => {
+  console.log('333');
   isShow.value = true
 })
+setTimeout(() => {
+  isShow.value =false
+}, 1000)
+
+
 // 定义一个对象，包含三种情况的样式，对象key就是类型字符串
 const style = {
   warning: {
@@ -49,17 +55,33 @@ const style = {
 </template>
 
 <style scoped lang="less">
- .down-enter-from,  .down-leave-to {
-   transform: translate3d(0, -75px, 0);
-   opacity: 0;
- }
- .down-enter-active,  .down-leave-active {
-   transition: all 0.3s;
- }
- .down-enter-to{
-   transform: none;
-   opacity: 1;
- }
+ .down {
+  &-enter {
+    &-from {
+      transform: translate3d(0, -75px, 0);
+      opacity: 0;
+    }
+    &-active {
+      transition: all 0.5s;
+    }
+    &-to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+  &-leave {
+    &-from {
+      opacity: 1;
+    }
+    &-active {
+      transition: all 1s;
+    }
+    &-to {
+      transform: translate3d(0, -75px, 0);
+      opacity: 0;
+    }
+  }
+}
 
 .xtx-message {
   width: 300px;
