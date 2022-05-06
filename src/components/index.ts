@@ -5,6 +5,8 @@ import More from './More/index.vue'
 import Bread from './Bread/index.vue'
 import BreadItem from './Bread/Item.vue'
 import City from './City/index.vue'
+import Numbox from './Numbox/index.vue'
+import Button from './Button/index.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
 export default {
@@ -15,6 +17,8 @@ export default {
     app.component('XtxBread', Bread)
     app.component('XtxBreadItem', BreadItem)
     app.component(City.name, City)
+    app.component(Numbox.name, Numbox)
+    app.component(Button.name, Button)
     app.directive('lazy', {
       mounted(el, binding) {
         const { stop } = useIntersectionObserver(el, ([{ isIntersecting }]) => {

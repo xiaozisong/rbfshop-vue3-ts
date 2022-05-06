@@ -20,16 +20,24 @@
         </div>
         <div class="spec">
           <GoodsName :goods="info" />
+          <GoodsSku :goods="info" v-if="info.id" skuId="1369155862131642369" @changeSkuId="changeSkuId"></GoodsSku>
+          <XtxNumbox v-model="count" :max="10" :min="1" label="数量" @change="change"></XtxNumbox>
+          <XtxButton size="middle" type="primary" style="margin-top: 20px; margin-left: 10px;">加入购物车</XtxButton>
         </div>
       </div>
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
           <!-- 商品+评价 -->
+          <GoodsDetails :goods="info"></GoodsDetails>
           <div class="goods-tabs"></div>
         </div>
         <!-- 24热榜+专题推荐 -->
-        <div class="goods-aside"></div>
+        <div class="goods-aside">
+          <GoodsHot :type="1" />
+          <GoodsHot :type="2" />
+          <GoodsHot :type="3" />
+        </div>
       </div>
     </div>
   </div>
@@ -39,8 +47,11 @@ import useStore from '@/store'
 import GoodsImage from './components/goods-images.vue'
 import GoodsSales from './components/goods-sales.vue'
 import GoodsName from './components/goods-name.vue'
+import GoodsSku from './components/goods-sku.vue'
+import GoodsDetails from './components/goods-detail.vue'
+import GoodsHot from './components/goods-hot.vue'
 import { storeToRefs } from 'pinia'
-import { watchEffect } from 'vue'
+import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 const { goods } = useStore()
 const route = useRoute()
@@ -50,6 +61,21 @@ watchEffect(() => {
 })
 
 const { info } = storeToRefs(goods)
+// 子传父下来的事件
+const changeSkuId = (skuId: string) => {
+  const sku = info.value.skus.find(item => item.id === skuId)
+  if (sku) {
+    info.value.inventory = sku.inventory
+    info.value.price = sku.price
+    info.value.oldPrice = sku.oldPrice
+  }
+}
+// 传递给numbox的数据
+const count = ref(3)
+// 子传父，每次NUMbox改变的值，带给父组件
+const change = (val: number) => {
+  console.log('我是父组件，我拿到了', val);
+}
 </script>
 <style scoped lang="less">
 .goods-info {

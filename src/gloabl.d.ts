@@ -4,6 +4,8 @@ import XtxMore from '@/components/More/index.vue'
 import XtxBread from '@/components/Bread/index.vue'
 import XtxBreadItem from '@/components/Bread/item.vue'
 import XtxCity from '@/components/City/index.vue'
+import XtxNumbox from '@/components/Numbox/index.vue'
+import XtxButton from '@/components/Button/index.vue'
 declare module 'vue' {
   export interface GlobalComponents {
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -14,6 +16,8 @@ declare module 'vue' {
     XtxBread: typeof XtxBread
     XtxBreadItem: typeof XtxBreadItem
     XtxCity: typeof XtxCity
+    XtxNumbox: typeof XtxNumbox
+    XtxButton: typeof XtxButton
   }
 }
 

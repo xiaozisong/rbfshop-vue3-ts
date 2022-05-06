@@ -22,6 +22,14 @@ export type Specs = {
     disabled: boolean
   }[]
 }[]
+// goods-details的类型声明
+type GoodsDetail = {
+  pictures: string[]
+  properties: {
+    name: string
+    value: string
+  }[]
+}
 // 商品模块的类型声明
 export type GoodsInfo = {
   id: string
@@ -49,4 +57,5 @@ export type GoodsInfo = {
   }[]
   skus: Skus
   specs: Specs
+  details: GoodsDetail
 }
