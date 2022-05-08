@@ -1,4 +1,4 @@
-import { useIntersectionObserver } from '@vueuse/core';
+import { useIntersectionObserver, useIntervalFn } from '@vueuse/core';
 import { ref } from 'vue'
 export function useLazyLoadData(callback: () => void) {
   const target = ref<null | HTMLImageElement>(null) 
@@ -13,4 +13,22 @@ export function useLazyLoadData(callback: () => void) {
     }
   })
   return target
+}
+// 倒计时
+export function useCountDown (cutNum: number = 60) {
+  let count = ref(0)
+  const { resume, pause } = useIntervalFn(() => {
+    count.value--
+    if(count.value <= 0) pause()
+  }, 1000, { immediate: false })
+  
+  const start = () => {
+    count.value = cutNum
+    resume()
+  }
+
+  return {
+    count,
+    start
+  }
 }

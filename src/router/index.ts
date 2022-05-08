@@ -31,7 +31,10 @@ export default createRouter({
       ]
     },
     {path: '/login', component: () => import('@/views/Login/index.vue')},
-    {path: '/pg', component: () => import('@/views/Playground/index.vue')}
-
+    {path: '/pg', component: () => import('@/views/Playground/index.vue')},
+    {
+      path: '/login/callback',
+      component: () => import('@/views/login/callback.vue')
+    }
   ]
 })

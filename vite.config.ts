@@ -22,5 +22,12 @@ export default defineConfig({
         `
       }
     }
+  },
+  // 配置开发服务器
+  server: {
+    host: 'www.corho.com',
+    port: 8080,
+    open: true, // 自动打开浏览器
+    cors: true, // 允许开发时ajax跨域
   }
 })
