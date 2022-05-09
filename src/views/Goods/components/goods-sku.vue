@@ -50,6 +50,8 @@ const changeSelected = (item: any, spec: any) => {
       console.log(pathMap[key], '48');
       if (pathMap[key][0]) {
         emit('changeSkuId', pathMap[key][0])   
+      }else{
+        emit('changeSkuId', '')
       }
     }
 }

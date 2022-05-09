@@ -6,3 +6,14 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+type FnType = (openId: string, accessToken: string) => void
+// 声明QC的类型声明注解
+declare namespace QC {
+  const Login: {
+    signOut:() => void
+    check: () => boolean
+    getMe: (cb: FnType) => void
+  }
+  const api: (api: 'get_user_info') => {success: (res: any) => void
+}}

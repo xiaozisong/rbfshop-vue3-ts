@@ -22,7 +22,7 @@
           <GoodsName :goods="info" />
           <GoodsSku :goods="info" :key="info.id" v-if="info.id" skuId="1369155862131642369" @changeSkuId="changeSkuId"></GoodsSku>
           <XtxNumbox v-model="count" :max="10" :min="1" label="数量" @change="change"></XtxNumbox>
-          <XtxButton size="middle" type="primary" style="margin-top: 20px; margin-left: 10px;">加入购物车</XtxButton>
+          <XtxButton size="middle" type="primary" style="margin-top: 20px; margin-left: 10px;" @click="addCart">加入购物车</XtxButton>
         </div>
       </div>
       <!-- 商品详情 -->
@@ -53,7 +53,8 @@ import GoodsHot from './components/goods-hot.vue'
 import { storeToRefs } from 'pinia'
 import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
-const { goods } = useStore()
+import Message from '@/components/message'
+const { goods, cart } = useStore()
 const route = useRoute()
 watchEffect(() => {
   const id = route.params.id as string
@@ -62,7 +63,9 @@ watchEffect(() => {
 
 const { info } = storeToRefs(goods)
 // 子传父下来的事件
+let skuIdParams = ''
 const changeSkuId = (skuId: string) => {
+  skuIdParams = skuId
   const sku = info.value.skus.find(item => item.id === skuId)
   if (sku) {
     info.value.inventory = sku.inventory
@@ -72,6 +75,14 @@ const changeSkuId = (skuId: string) => {
 }
 // 传递给numbox的数据
 const count = ref(3)
+
+// 加入购物车
+const addCart = async () => {
+  if(!skuIdParams) return Message({type: 'warning', text: '请选择完整的商品规格'})
+  console.log(skuIdParams)
+  await cart.addCart(skuIdParams, count.value)
+}
+
 // 子传父，每次NUMbox改变的值，带给父组件
 const change = (val: number) => {
   console.log('我是父组件，我拿到了', val);

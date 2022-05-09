@@ -33,7 +33,41 @@ export default defineStore('user', {
     logout () {
       this.profile = {} as IUserProfile
       removeProfile()
-    }
+    },
+    // 第三方登录第一种情况，已有账号，已绑定
+    async qqLogin (unionId: string , source: number = 6) {
+      const res = await http.post<ApiObjRes<IUserProfile>>('/login/social', { unionId, source })
+      this.profile = res.data.result
+      setProfile(res.data.result)
+    },
+    // ----------------------    第三方登录第二种情况 -----------------------------
+    // 第三方登录发送验证码
+    async qqCode (mobile: string) {
+      await http.get('/login/social/code', {params: {mobile}})
+    },
+    // qq账号与手机号进行绑定
+    async qqBind (unionId: string, mobile: string, code: string) {
+      const res = await http.post<ApiObjRes<IUserProfile>>('/login/social/bind', {unionId, mobile, code})
+      this.profile = res.data.result
+      setProfile(res.data.result)
+    },
+    async qqPatchLogin(data: any) {
+      const res = await http.post<ApiObjRes<IUserProfile>>(
+        `/login/social/${data.openId}/complement`,
+        data
+      )
+      // 1. 保存用户信息到 state 中
+      this.profile = res.data.result
+      setProfile(res.data.result)
+    },
+    // 绑定qq的短信验证码
+    async sendQQPathMsg(mobile: string) {
+      await http.get('/register/code', {
+        params: {
+          mobile
+        }
+      })
+    },
   },
   getters: {
 

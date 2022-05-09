@@ -1,6 +1,6 @@
 import Message from '@/components/message/index'
 import axios, { AxiosError } from 'axios'
-
+import { getProfile } from './storage'
 // 备用接口地址: http://pcapi-xiaotuxian-front-devtest.itheima.net/
 const instance = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front.itheima.net/',
@@ -8,6 +8,12 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(function(config){
+  const { token } = getProfile()
+  console.log(token)
+  
+  if (token) {
+    config.headers!.Authorization = `Bearer ${token}`
+  }
   // 在发送请求之前做些什么
   return config
 }, function(error){
@@ -17,10 +23,13 @@ instance.interceptors.request.use(function(config){
 instance.interceptors.response.use(function (response) {
   return response
 }, function (error: AxiosError<{code: string, message: string}>) {
-  console.dir(error,'20');
   if(error.response){
-    console.dir(error);
-    Message({type: 'error', text: error.response.data.message})
+    const { code, message } = error.response.data
+    if (code === '501' && message === '三方登录失败') {
+      Message({type: 'warning', text: '未于平台绑定第三方认证'})
+    }else{
+      Message({type: 'warning', text: message})
+    }
   }else{
     Message({type: 'error', text: '服务器异常，请重试'})
   }

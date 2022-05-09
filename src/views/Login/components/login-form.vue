@@ -78,6 +78,7 @@ import { useRouter } from 'vue-router'
 import { useForm,useField } from 'vee-validate'
 // 使用vueuse/core中的hook
 import { useCountDown } from '@/utils/hooks'
+import { accountRule, passwordRule, isAgreeRule, mobileRule, codeRule } from '@/utils/validate'
 // 仓库
 const { user } = useStore()
 // 路由实例
@@ -92,36 +93,11 @@ const handleCheck = (val: boolean) => {
 // ---------------------------------------表单--------------------------------------
 const { validate, resetForm } = useForm({
   validationSchema: { // 定义规则
-    // 用户名规则
-    account(value: string){
-      if (!value) return '用户名不能为空'
-      // 判断用户名的合法性
-      if(!/^[a-zA-Z]\w{4,19}$/.test(value)) return '必须以数字开头，并且长度最少为5位！'
-      return true
-    },
-    // 密码规则
-    password(value: string){
-      if(!value) return '密码不能为空'
-      if(!/^\w{6,12}$/.test(value)) return '请输入6-12位非空字符'
-      return true
-    },
-    // 同意协议规则
-    isAgree(value: boolean) {
-      if(!value) return '请勾选协议'
-      return true
-    },
-    // 手机号 
-    mobile(value: string) {
-      if(!value) return '请输入手机号'
-      if(!/^1[3-9]\d{9}$/.test(value)) return '请输入正确的手机号'
-      return true
-    },
-    // 验证码
-    code(value: string) {
-      if(!value) return '请输入验证码'
-      if(!/^\w{6}$/.test(value)) return '请输入六位验证码'
-      return true
-    }
+    account: accountRule,
+    password: passwordRule,
+    isAgree: isAgreeRule,
+    mobile: mobileRule,
+    code: codeRule
   }
 })
 // 使用
