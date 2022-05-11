@@ -12,10 +12,10 @@ const delCart = async (item: CartItem) => {
 
 <template>
   <div class="cart">
-    <a class="curr" href="javascript:;">
+    <a class="curr" href="javascript:;" @click="$router.push('/cart')">
       <i class="iconfont icon-cart"></i><em>{{ cart.getIsEffectiveTotalCount }}</em>
     </a>
-    <div class="layer">
+    <div class="layer" v-if="cart.isEffective.length && $route.path !== '/cart'">
       <div class="list">
         <div class="item" v-for="(item, index) in cart.isEffective" :key="index">
           <RouterLink to="">
@@ -42,7 +42,7 @@ const delCart = async (item: CartItem) => {
           <p>共 {{ cart.getIsEffectiveTotalCount }} 件商品</p>
           <p>&yen;{{ cart.getIsEffectiveTotalPrice.toFixed(2) }}</p>
         </div>
-        <XtxButton type="plain">去购物车结算</XtxButton>
+        <XtxButton type="plain" @click="$router.push('/cart')">去购物车结算</XtxButton>
       </div>
     </div>
   </div>

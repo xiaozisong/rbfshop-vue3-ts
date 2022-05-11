@@ -1,12 +1,16 @@
 <template>
   <div class="xtx-checkbox" @click="handleCheck">
-    <i class="iconfont icon-checked" v-if="flag"></i>
+    <i class="iconfont icon-checked" v-if="modelValue"></i>
     <i class="iconfont icon-unchecked" v-else></i>
-    <span>提示文本</span>
+    <slot></slot>
   </div>
 </template>
 <script lang="ts" setup name="XtxCheckbox">
+// 还没有处理 切换勾选的状态
 import { ref } from 'vue';
+defineProps<{
+  modelValue?: boolean
+}>()
 const emit = defineEmits<{
   (e: 'handleCheck', val: boolean): void
 }>()

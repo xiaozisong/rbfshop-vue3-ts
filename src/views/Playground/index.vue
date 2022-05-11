@@ -1,13 +1,17 @@
 <template>
   <div class="box">
-    <button @click="clickFn">按钮，点我弹message</button>
+    <button @click="handleClick">点我提示</button>
   </div>
 </template>
 
 <script setup lang="ts" name="play">
-import Message from '@/components/message/index'
-const clickFn = () => {
-  Message({type: 'error', text: 'hhh', duration: 2000})
+import XtxConfirm from '@/components/confirm/index'
+const handleClick = async () => {
+  XtxConfirm({title: 'xx', text: '22'}).then((res) => {
+    console.log(res);
+  }).catch(() => {
+    
+  })  
 }
 </script>
 

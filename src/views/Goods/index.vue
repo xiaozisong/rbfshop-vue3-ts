@@ -81,6 +81,7 @@ const addCart = async () => {
   if(!skuIdParams) return Message({type: 'warning', text: '请选择完整的商品规格'})
   console.log(skuIdParams)
   await cart.addCart(skuIdParams, count.value)
+  Message({type: 'success', text: '添加购物车成功'})
 }
 
 // 子传父，每次NUMbox改变的值，带给父组件

@@ -27,6 +27,7 @@ export default defineStore('cart', {
           clearInvalid
         }
       })
+      this.getCartList()
     }
   },
   getters: {
