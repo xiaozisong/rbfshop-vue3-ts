@@ -12,7 +12,7 @@
 const props = defineProps({ // 接收父组件传递下来的count
   modelValue: {
     type: Number,
-    default: 0
+    default: 1
   },
   max: {
     type: Number,

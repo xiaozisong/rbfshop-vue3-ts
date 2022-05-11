@@ -11,6 +11,22 @@ const delCart = (skuId: string) => {
     Message({type: 'success', text: '删除成功'})
   }).catch(() => {})
 }
+// 更改选中状态
+const handleCheck = async (skuId: string, selected: boolean) => {
+  await cart.updateCart(skuId, {selected})
+}
+// 更新数量
+const changeCount = async (skuId: string, count: number) => {
+  console.log(count, '20');
+  
+  await cart.updateCart(skuId, {count})
+}
+// 全选或反选
+const changeAllSelected = async (selected: boolean) => {
+  console.log(selected);
+  
+  await cart.changeAllSelected(selected)
+}
 </script>
 
 <template>
@@ -24,7 +40,7 @@ const delCart = (skuId: string) => {
         <table>
           <thead>
             <tr>
-              <th width="120"><XtxCheckbox>全选</XtxCheckbox></th>
+              <th width="120"><XtxCheckbox :modelValue="cart.isCheckAll" @handleCheck="changeAllSelected($event)">全选</XtxCheckbox></th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
               <th width="180">数量</th>
@@ -46,7 +62,7 @@ const delCart = (skuId: string) => {
           <!-- 有效商品 -->
           <tbody>
             <tr v-for="item in cart.isEffective" :key="item.skuId">
-              <td><XtxCheckbox :modelValue="item.selected" /></td>
+              <td><XtxCheckbox :modelValue="item.selected" @handleCheck="handleCheck(item.skuId, $event)"/></td>
               <td>
                 <div class="goods">
                   <RouterLink to="/">
@@ -67,7 +83,7 @@ const delCart = (skuId: string) => {
                 <p>&yen;{{ item.nowPrice }}</p>
               </td>
               <td class="tc">
-                <XtxNumbox :model-value="item.count" />
+                <XtxNumbox :model-value="item.count" @update:modelValue="changeCount(item.skuId, $event)"/>
               </td>
               <td class="tc"><p class="f16 red">&yen;{{ item.count * +item.nowPrice }}</p></td>
               <td class="tc">
@@ -85,8 +101,8 @@ const delCart = (skuId: string) => {
       <div class="action">
         <div class="batch"></div>
         <div class="total">
-          共 7 件有效商品，已选择 2 件，商品合计：
-          <span class="red">¥400</span>
+          共 {{ cart.getIsEffectiveTotalCount }} 件有效商品，已选择 {{ cart.getIsEffectiveGoodsCount }} 件，商品合计：
+          <span class="red">¥{{ cart.getIsEffectiveCheckGoodsTotalPrice }}</span>
           <XtxButton type="primary">下单结算</XtxButton>
         </div>
       </div>

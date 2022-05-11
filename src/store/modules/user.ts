@@ -3,6 +3,7 @@ import http from '@/utils/request'
 import { IUserProfile } from '@/types/user'
 import { ApiObjRes } from "@/types/data"
 import { getProfile, removeProfile, setProfile } from "@/utils/storage";
+import useStore from '@/store'
 export default defineStore('user', {
   state() {
     return {
@@ -31,8 +32,10 @@ export default defineStore('user', {
     },
     // 退出
     logout () {
+      const { cart } = useStore()
       this.profile = {} as IUserProfile
       removeProfile()
+      cart.clearCart()
     },
     // 第三方登录第一种情况，已有账号，已绑定
     async qqLogin (unionId: string , source: number = 6) {

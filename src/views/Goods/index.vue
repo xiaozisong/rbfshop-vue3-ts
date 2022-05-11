@@ -54,7 +54,8 @@ import { storeToRefs } from 'pinia'
 import { watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Message from '@/components/message'
-const { goods, cart } = useStore()
+import { CartItem } from '@/types/cart'
+const { goods, cart, user } = useStore()
 const route = useRoute()
 watchEffect(() => {
   const id = route.params.id as string
@@ -79,8 +80,22 @@ const count = ref(3)
 // 加入购物车
 const addCart = async () => {
   if(!skuIdParams) return Message({type: 'warning', text: '请选择完整的商品规格'})
-  console.log(skuIdParams)
-  await cart.addCart(skuIdParams, count.value)
+    const sku = info.value.skus.find(item => item.id === skuIdParams)
+    const attrsText = sku?.specs.map(item => item.valueName).join(' ')    
+    cart.addCart({
+    // 本地添加
+    id: info.value.id,
+    name: info.value.name,
+    picture: info.value.mainPictures[0],
+    price: info.value.price,
+    count: count.value,
+    skuId: skuIdParams,
+    attrsText,
+    selected: true,
+    nowPrice: info.value.price,
+    stock: info.value.inventory,
+    isEffective: true,
+  } as CartItem)
   Message({type: 'success', text: '添加购物车成功'})
 }
 
