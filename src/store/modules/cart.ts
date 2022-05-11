@@ -9,6 +9,9 @@ export default defineStore('cart', {
       list: [] as CartItem[]
     }
   },
+  persist: {
+    key: 'rbf-cart-list'
+  },
   actions: {
     // 添加购物车
     async addCart (data: CartItem) {
