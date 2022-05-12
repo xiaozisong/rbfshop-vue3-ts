@@ -2,8 +2,11 @@ import Message from '@/components/message/index'
 import axios, { AxiosError } from 'axios'
 import { getProfile } from './storage'
 // 备用接口地址: http://pcapi-xiaotuxian-front-devtest.itheima.net/
+// export const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net'
+export const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
 const instance = axios.create({
-  baseURL: 'http://pcapi-xiaotuxian-front.itheima.net/',
+  // baseURL: 'http://pcapi-xiaotuxian-front.itheima.net/',
+  baseURL,
   timeout: 5000
 })
 

@@ -3,7 +3,9 @@
 import Confirm from '@/components/confirm';
 import Message from '@/components/message';
 import useStore from '@/store'
+import { useRouter } from 'vue-router'
 const { cart } = useStore()
+const router = useRouter()
 // 删除商品
 const delCart = (skuId: string) => {
   Confirm({title: '温馨提示', text: '确定删除该商品吗'}).then(async () => {
@@ -17,15 +19,16 @@ const handleCheck = async (skuId: string, selected: boolean) => {
 }
 // 更新数量
 const changeCount = async (skuId: string, count: number) => {
-  console.log(count, '20');
-  
   await cart.updateCart(skuId, {count})
 }
 // 全选或反选
 const changeAllSelected = async (selected: boolean) => {
-  console.log(selected);
-  
   await cart.changeAllSelected(selected)
+}
+// 下单结算
+const handleCheckout = () => {
+  if (cart.getIsEffectiveGoodsCount <= 0) return Message({type: 'warning', text: '至少选择一件商品'})
+  router.push('/member/checkout')
 }
 </script>
 
@@ -103,7 +106,7 @@ const changeAllSelected = async (selected: boolean) => {
         <div class="total">
           共 {{ cart.getIsEffectiveTotalCount }} 件有效商品，已选择 {{ cart.getIsEffectiveGoodsCount }} 件，商品合计：
           <span class="red">¥{{ cart.getIsEffectiveCheckGoodsTotalPrice }}</span>
-          <XtxButton type="primary">下单结算</XtxButton>
+          <XtxButton type="primary" @click="handleCheckout">下单结算</XtxButton>
         </div>
       </div>
     </div>

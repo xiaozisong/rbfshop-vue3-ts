@@ -73,7 +73,7 @@
 import {  ref, watch } from 'vue'
 import useStore from '@/store'
 import Message from '@/components/message'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 // 引入表单校验库
 import { useForm,useField } from 'vee-validate'
 // 使用vueuse/core中的hook
@@ -83,6 +83,7 @@ import { accountRule, passwordRule, isAgreeRule, mobileRule, codeRule } from '@/
 const { user } = useStore()
 // 路由实例
 const router = useRouter()
+const route = useRoute()
 const activeName = ref<'account' | 'mobile'>('account')
 // 定义勾选协议的val
 const isCheck = ref(false) 
@@ -141,8 +142,9 @@ const handleLogin = async () => {
     if(res.errors.mobile || res.errors.code || res.errors.isAgree) return
     await user.codeLogin(mobile.value, code.value)
   }
+  router.push(route.query.redirectUrl as string || '/')
   Message({type: 'success', text: '登录成功！'})
-router.push('/')
+  
 }
 </script>
 

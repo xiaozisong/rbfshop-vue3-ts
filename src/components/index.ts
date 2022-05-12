@@ -9,6 +9,7 @@ import Numbox from './Numbox/index.vue'
 import Button from './Button/index.vue'
 import Checkbox from './Checkbox/index.vue'
 import Message from './message/message.vue'
+import Dialog from './Dialog/index.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
 export default {
@@ -23,6 +24,7 @@ export default {
     app.component(Button.name, Button)
     app.component(Checkbox.name, Checkbox)
     app.component(Message.name, Message)
+    app.component(Dialog.name, Dialog)
     app.directive('lazy', {
       mounted(el, binding) {
         const { stop } = useIntersectionObserver(el, ([{ isIntersecting }]) => {

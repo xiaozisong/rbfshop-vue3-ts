@@ -1,6 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, useRouter } from 'vue-router'
 import Layout from '@/Layout/index.vue'
-export default createRouter({
+import useStore from '@/store'
+import Confirm from '@/components/Confirm'
+const router =  createRouter({
   history: createWebHashHistory(),
   scrollBehavior: () => {
     return {
@@ -31,6 +33,32 @@ export default createRouter({
         {
           path: '/cart',
           component: () => import('@/views/cart/index.vue')
+        },
+        {
+          path: '/member/checkout',
+          component: () => import('@/views/member/pay/checkout.vue')
+        },
+        {
+          path: '/member/pay',
+          component: () => import('@/views/member/pay/index.vue')
+        },
+        {
+          path: '/pay/callback',
+          component: () => import('@/views/member/pay/callback.vue')
+        },
+        {
+          path: '/member',
+          component: () => import('@/views/member/layout/index.vue'),
+          children: [
+            {
+              path: '',
+              component: () => import('@/views/Member/home/index.vue')
+            },
+            {
+              path: 'order',
+              component: () => import('@/views/Member/order/index.vue')
+            }
+          ]
         }
       ]
     },
@@ -40,5 +68,25 @@ export default createRouter({
       path: '/login/callback',
       component: () => import('@/views/login/callback.vue')
     }
-  ]
+  ],
 })
+router.beforeEach((to, from, next) => {
+  const { cart } = useStore()
+  if (cart.isLogin) {
+    next()
+  } else {
+    if (to.path.includes('/member')) {
+      Confirm({title: '温馨提示', text: '亲~您还有登录哦'}).then(() => {
+        next({
+          path: '/login',
+          query: {
+            redirectUrl: to.fullPath
+          }
+        })
+      }).catch(() => {})
+    }else{
+      next()
+    }
+  }
+})
+export default router

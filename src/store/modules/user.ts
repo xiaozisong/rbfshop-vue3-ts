@@ -11,10 +11,13 @@ export default defineStore('user', {
     }
   },
   actions: {
+    // 登录并获取用户资料
     async getUserProfile (obj: {account: string, password: string}) {
       const res = await http.post<ApiObjRes<IUserProfile>>('/login', obj)
       this.profile = res.data.result
       setProfile(res.data.result)
+      const { cart } = useStore()
+      cart.cartMerge()
     },
     // 发送验证码
     async getCode (mobile: string) {

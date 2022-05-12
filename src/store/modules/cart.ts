@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import http from '@/utils/request'
-import { ApiRes } from '@/types/data'
+import { ApiObjRes, ApiRes } from '@/types/data'
 import { CartItem } from '@/types/cart'
 import useStore from '@/store'
 export default defineStore('cart', {
@@ -19,13 +19,33 @@ export default defineStore('cart', {
         const { skuId, count } = data
         await http.post('/member/cart', {skuId, count})
       } else {
-        this.list.unshift(data!)
+        const sku = this.list.find(item => item.skuId === data.skuId)
+        if (sku) {
+          sku.count+=data.count
+        } else {
+          this.list.unshift(data!)
+        }
       }
+      this.getCartList()
     },
     // 获取购物车列表
     async getCartList () {
-      const res = await http.get<ApiRes<CartItem>>('/member/cart')
-      this.list = res.data.result
+      if (this.isLogin) {
+        const res = await http.get<ApiRes<CartItem>>('/member/cart')
+        this.list = res.data.result
+      } else {
+        type ResItem = {
+          isEffective: boolean
+          nowPrice: string
+          stock: number
+        }
+        this.list.forEach(async item => {
+          const res = await http.get<ApiObjRes<ResItem>>(`/goods/stock/${item.skuId}`)
+          item.isEffective = res.data.result.isEffective
+          item.nowPrice = res.data.result.nowPrice
+          item.stock = res.data.result.stock
+        })
+      }
     },
     // 删除购物车中的单个商品
     async delCart(ids: string[], clearAll: boolean, clearInvalid: boolean){
@@ -67,6 +87,18 @@ export default defineStore('cart', {
         this.list.forEach(item => item.selected = selected)
       }
       this.getCartList()
+    },
+    // 登录后合并购物车
+    async cartMerge () {
+      const newArr = this.list.map(item => {
+        return {
+          skuId: item.skuId,
+          selected: item.selected,
+          count: item.count
+         }
+      })
+      const res = await http.post<ApiRes<CartItem>>('/member/cart/merge', newArr)
+      this.list = res.data.result
     },
     // 清空购物车
     clearCart () {

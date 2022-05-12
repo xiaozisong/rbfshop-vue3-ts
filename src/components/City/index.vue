@@ -18,7 +18,7 @@ import axios  from 'axios'
 import { AreaList, Address } from '@/types/city'
 
 defineProps<{
-  defaultAddress?: string[]
+  defaultAddress?: string[] | string
 }>()
 // 子传父 ts版本
 const emit = defineEmits<{
