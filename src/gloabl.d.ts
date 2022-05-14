@@ -9,6 +9,8 @@ import XtxButton from '@/components/Button/index.vue'
 import XtxCheckbox from '@/components/Checkbox/index.vue'
 import XtxMessage from '@/components/message/message.vue'
 import XtxDialog from '@/components/Dialog/index.vue'
+import XtxTabs from '@/components/tabs/index.vue'
+import XtxTabsPane from '@/components/tabs/panel.vue'
 declare module 'vue' {
   export interface GlobalComponents {
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -24,6 +26,8 @@ declare module 'vue' {
     XtxCheckbox: typeof XtxCheckbox
     XtxMessage: typeof XtxMessage
     XtxDialog: typeof XtxDialog
+    XtxTabs: typeof XtxTabs
+    XtxTabsPane: typeof XtxTabsPane
   }
 }
 

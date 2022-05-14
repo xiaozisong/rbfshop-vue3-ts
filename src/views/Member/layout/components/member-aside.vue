@@ -41,6 +41,12 @@
     </template>
 
     <style scoped lang="less">
+    .router-link-exact-active {
+      color: @xtxColor !important;
+      &:before {
+        display: block !important;
+      }
+    }
     .xtx-member-aside {
       width: 220px;
       margin-right: 20px;
